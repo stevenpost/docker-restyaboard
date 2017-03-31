@@ -7,7 +7,8 @@ ENV RESTYABOARD_VERSION=v0.4.2 \
     SMTP_USERNAME=root \
     SMTP_PASSWORD=root \
     SMTP_SERVER=localhost \
-    SMTP_PORT=465
+    SMTP_PORT=465 \
+    TZ=Etc/UTC
 
 # update & install package
 RUN apt-get update && \
@@ -68,7 +69,7 @@ RUN rm /etc/nginx/sites-enabled/default && \
 RUN apt-get autoremove -y --purge && \
     apt-get clean
 
-# entry point
+# entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

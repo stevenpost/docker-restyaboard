@@ -3,13 +3,28 @@ Docker Restyaboard
 
 Trello like kanban board. http://restya.com/board/
 
+TL;DR
+-----
+
+```bash
+git clone https://github.com/cangeli/docker-restyaboard
+cd docker-restyaboard
+git checkout alpine
+docker-compose up -d
+```
+http://127.0.0.1:1234
+```
+Username: admin
+Password: restya
+```
+
 docker-compose.yml
 ------------------
 ```
 version: '2'
 services:
   restyaboard:
-    image: cangeli/docker-restyaboard:0.4.2
+    image: cangeli/docker-restyaboard:alpine
     ports:
       - 1234:80
     volumes:
@@ -23,7 +38,7 @@ services:
       - postgres
     restart: always
   postgres:
-    image: postgres:9.6
+    image: kiasaki/alpine-postgres
     ports:
       - 5432:5432
     environment:

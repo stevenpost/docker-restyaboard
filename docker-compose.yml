@@ -1,7 +1,5 @@
 version: '2'
-
 services:
-
   restyaboard:
     build: .
     ports:
@@ -18,12 +16,10 @@ services:
       - SMTP_PASSWORD=pass
       - SMTP_SERVER=server
       - SMTP_PORT=465
+      - TZ=Etc/UTC
     depends_on:
       - postgres
-    networks:
-      - restya-net
     restart: always
-
   postgres:
     image: postgres:9.6
     ports:
@@ -33,9 +29,4 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=restyaboard
-    networks:
-      - restya-net
     restart: always
-
-networks:
-  restya-net:
