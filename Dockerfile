@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV RESTYABOARD_VERSION=v0.4.2 \
+ENV RESTYABOARD_VERSION=v0.6.5 \
     ROOT_DIR=/usr/share/nginx/html \
     CONF_FILE=/etc/nginx/conf.d/restyaboard.conf \
     SMTP_DOMAIN=localhost \
@@ -63,7 +63,8 @@ RUN rm /etc/nginx/sites-enabled/default && \
     chown -R www-data:www-data . && \
     chmod -R 777 media && \
     chmod -R 777 client/img && \
-    chmod -R 777 tmp
+    chmod -R 777 tmp && \
+    sed -i "s/php7.2-fpm.sock/php7.0-fpm.sock/g" ${CONF_FILE}
 
 # cleanup
 RUN apt-get autoremove -y --purge && \
