@@ -64,11 +64,11 @@ if [ "$1" = 'start' ]; then
   set -e
 
   # cron shell
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/instant_email_notification.sh >(logger -t instant) 2>&1" >> /var/spool/cron/crontabs/root
-  echo "0 * * * * ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh >(logger -t periodic) 2>&1" >> /var/spool/cron/crontabs/root
-  echo "*/30 * * * * ${ROOT_DIR}/server/php/shell/imap.sh >(logger -t imap) 2>&1" >> /var/spool/cron/crontabs/root
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/webhook.sh >(logger -t webhook) 2>&1" >> /var/spool/cron/crontabs/root
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh >(logger -t card_due) 2>&1" >> /var/spool/cron/crontabs/root
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/instant_email_notification.sh >(logger -t instant) 2>&1" >> /etc/cron.d/restya
+  echo "0 * * * * root ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh >(logger -t periodic) 2>&1" >> /etc/cron.d/restya
+  echo "*/30 * * * * root ${ROOT_DIR}/server/php/shell/imap.sh >(logger -t imap) 2>&1" >> /etc/cron.d/restya
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/webhook.sh >(logger -t webhook) 2>&1" >> /etc/cron.d/restya
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/card_due_notification.sh >(logger -t card_due) 2>&1" >> /etc/cron.d/restya
 
   # Let the cron scripts log to syslog
   sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
@@ -78,11 +78,14 @@ if [ "$1" = 'start' ]; then
   sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/card_due_notification.sh"
 
   # Make the cron scripts executable
+  chmod +x "/etc/cron.d/restya"
   chmod +x "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/periodic_email_notification.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/imap.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/webhook.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/card_due_notification.sh"
+
+  crontab /etc/cron.d/restya
 
   # service start
   service rsyslog start
