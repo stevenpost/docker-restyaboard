@@ -71,15 +71,15 @@ if [ "$1" = 'start' ]; then
   echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh" >> /var/spool/cron/crontabs/root
 
   # service start
+  service rsyslog start
   service cron start
   service php7.0-fpm start
   service nginx start
-  service rsyslog start
   service postfix start
 
   # tail log
   sleep 1
-  exec tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/mail.log /var/log/mail.info
+  exec tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/mail.log /var/log/mail.info /var/log/messages /var/log/syslog
 fi
 
 exec "$@"
