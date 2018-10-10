@@ -34,6 +34,7 @@ RUN apt-get update && \
     php7.0-pgsql \
     php7.0-xml \
     postfix \
+    libsasl2-modules \
     postgresql-client \
     unzip
 
