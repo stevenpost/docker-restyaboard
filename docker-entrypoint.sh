@@ -74,10 +74,11 @@ if [ "$1" = 'start' ]; then
   service cron start
   service php7.0-fpm start
   service nginx start
+  service rsyslog start
   service postfix start
 
   # tail log
-  exec tail -f /var/log/nginx/access.log /var/log/nginx/error.log
+  exec tail -f /var/log/nginx/access.log /var/log/nginx/error.log /var/log/mail.log /var/log/mail.info
 fi
 
 exec "$@"

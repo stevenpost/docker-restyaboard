@@ -15,6 +15,7 @@ RUN apt-get update && \
     echo "postfix postfix/mailname string localhost" | debconf-set-selections && \
     echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections && \
     TERM=linux DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    rsyslog \
     cron \
     curl \
     imagemagick \
