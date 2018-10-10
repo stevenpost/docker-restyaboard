@@ -64,11 +64,11 @@ if [ "$1" = 'start' ]; then
   set -e
 
   # cron shell
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/instant_email_notification.sh" >> /var/spool/cron/crontabs/root
-  echo "0 * * * * ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh" >> /var/spool/cron/crontabs/root
-  echo "*/30 * * * * ${ROOT_DIR}/server/php/shell/imap.sh" >> /var/spool/cron/crontabs/root
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/webhook.sh" >> /var/spool/cron/crontabs/root
-  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh" >> /var/spool/cron/crontabs/root
+  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/instant_email_notification.sh >(logger -t instant) 2>&1" >> /var/spool/cron/crontabs/root
+  echo "0 * * * * ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh >(logger -t periodic) 2>&1" >> /var/spool/cron/crontabs/root
+  echo "*/30 * * * * ${ROOT_DIR}/server/php/shell/imap.sh >(logger -t imap) 2>&1" >> /var/spool/cron/crontabs/root
+  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/webhook.sh >(logger -t webhook) 2>&1" >> /var/spool/cron/crontabs/root
+  echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh >(logger -t card_due) 2>&1" >> /var/spool/cron/crontabs/root
 
   # Make the cron scripts executable
   chmod +x "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
