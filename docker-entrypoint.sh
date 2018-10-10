@@ -70,6 +70,13 @@ if [ "$1" = 'start' ]; then
   echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/webhook.sh >(logger -t webhook) 2>&1" >> /var/spool/cron/crontabs/root
   echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh >(logger -t card_due) 2>&1" >> /var/spool/cron/crontabs/root
 
+  # Let the cron scripts log to syslog
+  sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
+  sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/periodic_email_notification.sh"
+  sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/imap.sh"
+  sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/webhook.sh"
+  sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/card_due_notification.sh"
+
   # Make the cron scripts executable
   chmod +x "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/periodic_email_notification.sh"
