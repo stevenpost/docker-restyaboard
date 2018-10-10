@@ -42,6 +42,8 @@ if [ "$1" = 'start' ]; then
       -e '$ a smtp_tls_wrappermode = yes' \
       -e '$ a smtp_tls_security_level = encrypt' \
       -e '$ a smtp_tls_note_starttls_offer = yes' \
+      -e '$ a smtp_tls_protocols=!SSLv2,!SSLv3' \
+      -e '$ a smtpd_tls_protocols=!SSLv2,!SSLv3' \
       /etc/postfix/main.cf
 
   # init db
