@@ -70,6 +70,13 @@ if [ "$1" = 'start' ]; then
   echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/webhook.sh" >> /var/spool/cron/crontabs/root
   echo "*/5 * * * * ${ROOT_DIR}/server/php/shell/card_due_notification.sh" >> /var/spool/cron/crontabs/root
 
+  # Make the cron scripts executable
+  chmod +x "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
+  chmod +x "${ROOT_DIR}/server/php/shell/periodic_email_notification.sh"
+  chmod +x "${ROOT_DIR}/server/php/shell/imap.sh"
+  chmod +x "${ROOT_DIR}/server/php/shell/webhook.sh"
+  chmod +x "${ROOT_DIR}/server/php/shell/card_due_notification.sh"
+
   # service start
   service rsyslog start
   service cron start
