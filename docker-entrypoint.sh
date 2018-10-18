@@ -85,9 +85,8 @@ if [ "$1" = 'start' ]; then
   chmod +x "${ROOT_DIR}/server/php/shell/webhook.sh"
   chmod +x "${ROOT_DIR}/server/php/shell/card_due_notification.sh"
 
-  # set the MAIL addresses for cronjobs
+  # set the MAILFROM address for cronjobs
   sed -i "1iMAILFROM=${MAILFROM}" /etc/crontab
-  sed -i "1iMAILTO=${MAILTO}" /etc/crontab
 
   crontab /etc/cron.d/restya
 
