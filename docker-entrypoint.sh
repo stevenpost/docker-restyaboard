@@ -64,11 +64,11 @@ if [ "$1" = 'start' ]; then
   set -e
 
   # cron shell
-  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/instant_email_notification.sh" >> /etc/cron.d/restya
-  echo "0 * * * * root ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh" >> /etc/cron.d/restya
-  echo "*/30 * * * * root ${ROOT_DIR}/server/php/shell/imap.sh" >> /etc/cron.d/restya
-  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/webhook.sh" >> /etc/cron.d/restya
-  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/card_due_notification.sh" >> /etc/cron.d/restya
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/instant_email_notification.sh > /dev/null 2>&1" >> /etc/cron.d/restya
+  echo "0 * * * * root ${ROOT_DIR}/server/php/shell/periodic_email_notification.sh > /dev/null 2>&1" >> /etc/cron.d/restya
+  echo "*/30 * * * * root ${ROOT_DIR}/server/php/shell/imap.sh > /dev/null 2>&1" >> /etc/cron.d/restya
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/webhook.sh > /dev/null 2>&1" >> /etc/cron.d/restya
+  echo "*/5 * * * * root ${ROOT_DIR}/server/php/shell/card_due_notification.sh > /dev/null 2>&1" >> /etc/cron.d/restya
 
   # Let the cron scripts log to syslog
   sed -i '2iexec 1> >(logger -s -t $(basename $0)) 2>&1' "${ROOT_DIR}/server/php/shell/instant_email_notification.sh"
