@@ -101,7 +101,6 @@ if [ "$1" = 'start' ]; then
   sleep 1
   exec tail -f /var/log/nginx/access.log \
                /var/log/nginx/error.log \
-               /var/log/mail.log \
                /var/log/mail.info \
                /var/log/messages \
                /var/log/syslog \
